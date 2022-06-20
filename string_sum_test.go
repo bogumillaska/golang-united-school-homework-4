@@ -51,6 +51,21 @@ func TestStringSum_withSpaces(t *testing.T) {
 
 }
 
+func TestStringSum_whiteSpace(t *testing.T) {
+	got := "-3 -   5"
+	want := "-8"
+
+	result, err := StringSum(got)
+	if err != nil {
+		t.Error("Should not return error")
+	}
+
+	if want != result {
+		t.Errorf("get %v, wanted %v", got, want)
+	}
+
+}
+
 func TestStringSum_firstOperandNegative(t *testing.T) {
 	got := " -3 + 5  "
 	want := "2"

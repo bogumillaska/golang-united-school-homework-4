@@ -26,7 +26,7 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
-	trimed := strings.TrimSpace(input)
+	trimed := strings.ReplaceAll(input, " ", "")
 	if len(trimed) == 0 {
 		return "", fmt.Errorf("wrong input: %w", errorEmptyInput)
 	}
@@ -47,17 +47,15 @@ func StringSum(input string) (output string, err error) {
 		return "", fmt.Errorf("wrong input: %w", errorNotTwoOperands)
 	}
 
-	value1, err1 := strconv.Atoi(strings.TrimSpace(operands[0]))
-	value2, err2 := strconv.Atoi(strings.TrimSpace(operands[1]))
+	value1, err1 := strconv.Atoi(operands[0])
+	value2, err2 := strconv.Atoi(operands[1])
 
 	if err1 != nil {
-		print(err1.Error())
-		return "", fmt.Errorf(err1.Error())
+		return "", fmt.Errorf("conversion error : %w", err1)
 	}
 
 	if err2 != nil {
-		print(err2.Error())
-		return "", fmt.Errorf(err2.Error())
+		return "", fmt.Errorf("coversion error : %w", err2)
 	}
 
 	output = strconv.Itoa(value1 + value2)
