@@ -28,12 +28,23 @@ var (
 func StringSum(input string) (output string, err error) {
 	trimed := strings.TrimSpace(input)
 	if len(trimed) == 0 {
-		return "", errorEmptyInput
+		return "", fmt.Errorf("wrong input: %w", errorEmptyInput)
 	}
 
-	operands := strings.Split(trimed, "+")
+	var operands []string
+	if strings.Contains(trimed, "+") {
+		operands = strings.Split(trimed, "+")
+	} else {
+		lastMinus := strings.LastIndex(trimed, "-")
+		if lastMinus == -1 {
+			return "", fmt.Errorf("wrong input: %w", errorNotTwoOperands)
+		} else {
+			operands = []string{trimed[:lastMinus], trimed[lastMinus:]}
+		}
+	}
+
 	if len(operands) != 2 {
-		return "", errorNotTwoOperands
+		return "", fmt.Errorf("wrong input: %w", errorNotTwoOperands)
 	}
 
 	value1, err1 := strconv.Atoi(strings.TrimSpace(operands[0]))
